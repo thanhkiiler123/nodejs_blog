@@ -2,11 +2,19 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const exphbs = require("express-handlebars");
+const { urlencoded } = require("express");
 
 const app = express();
 const port = 3000;
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(express.json());
 
 app.engine(
   "hbs",
@@ -25,6 +33,14 @@ app.get("/", (req, res) => {
 
 app.get("/news", (req, res) => {
   res.render("news");
+});
+
+app.get("/search", (req, res) => {
+  res.render("search");
+});
+
+app.post("/search", (req, res) => {
+  res.render("search");
 });
 
 app.listen(port, () => {
